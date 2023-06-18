@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+
 ((gsap) => {
   let time = 1;
 
