@@ -2,16 +2,17 @@ import gsap from 'gsap';
 ((gsap) => {
   let time = 1;
 
-  console.log('gsap', gsap);
+  console.log('gsapski', gsap);
   const startPosition = { x: 730, y: 350 };
   const imageContainer = document.querySelector('.static-image');
+  imageContainer.style.backgroundImage = "src('NORLYS3328.png')";
+  imageContainer.style.backgroundScale = 'cover';
   imageContainer.addEventListener('click', (e) => {
     console.log(e.clientX, e.clientY, e);
     startPosition.x = e.clientX;
     startPosition.y = e.clientY;
   });
-  const NUM_ICONS = 10;
-  const iconPaths = ['assets/wifi.svg', 'assets/thumbs.svg'];
+  const iconPaths = ['wifi.svg', 'thumbs.svg'];
 
   animateIcon(1.3);
 
@@ -24,9 +25,7 @@ import gsap from 'gsap';
     icon.style.backgroundScale = 'cover';
     icon.style.position = 'absolute';
     imageContainer.appendChild(icon);
-    icon.addEventListener('click', () => {
-      console.log('click');
-    });
+
     const iconAnimTimeline = gsap.timeline({
       onComplete: () => {
         console.log('tl complete');
