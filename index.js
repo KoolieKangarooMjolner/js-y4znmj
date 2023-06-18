@@ -1,6 +1,86 @@
-// Import stylesheets
-import './style.css';
 
-// Write Javascript code!
-const appDiv = document.getElementById('app');
-appDiv.innerHTML = `<h1>JS Starter</h1>`;
+
+
+
+
+((gsap) => {
+    let time = 1;
+
+    
+    console.log("gsap", gsap);
+    const startPosition = {x: 730, y: 350}
+    const imageContainer = document.querySelector(".static-image");
+    imageContainer.addEventListener("click", (e) => {
+        
+        console.log(e.clientX, e.clientY, e);
+        startPosition.x = e.clientX;
+        startPosition.y = e.clientY;
+    });
+    const NUM_ICONS = 10;
+    const iconPaths = ["assets/wifi.svg", "assets/thumbs.svg"]; 
+
+    animateIcon(1.3);
+
+    function animateIcon(t = 1){
+        let icon = document.createElement("div");
+        icon.classList.add("animated-icon");
+        icon.style.backgroundImage = `url(${iconPaths[Math.floor(Math.random()*iconPaths.length)]})`;
+        icon.style.backgroundScale = "cover";
+        icon.style.position = "absolute";
+        imageContainer.appendChild(icon);
+        icon.addEventListener("click", ()=> {
+            console.log("click");
+        })
+        const iconAnimTimeline = gsap.timeline({onComplete: ()=> {
+            console.log("tl complete");
+            gsap.
+            imageContainer.removeChild(icon);
+            icon = null;
+        }});
+        const scale = 0.8 + Math.random() * 0.4;
+        const off = 0;
+        iconAnimTimeline.set(icon, {x: startPosition.x, y: startPosition.y});
+        iconAnimTimeline.add(()=> {
+            animateIcon(0.5+Math.random()*3);
+        }, 0.5+Math.random()* 2)
+        iconAnimTimeline.fromTo(icon, {scaleX: 0}, {scaleX: scale, ease: "elastic", duration: 0.8 + Math.random()*0.2}, off);
+        iconAnimTimeline.fromTo(icon, {scaleY: 0}, {scaleY: scale, ease: "elastic", duration: 1+ Math.random()*0.3}, off);
+        iconAnimTimeline.to(icon, {x: ["+=", "-="][Math.random()>0.5?1:0] + 10 + Math.random() * 10, ease: "sine.inOut", repeat: Math.round(1 + Math.random()*5), yoyo: true, duration: 1.4 + Math.random()*1.6}, off);
+        iconAnimTimeline.fromTo(icon, {rotate: -10}, {rotate: 10, ease: "sine.inOut", repeat: -1, yoyo: true, duration: 0.2 + Math.random()*1.5}, off);
+        iconAnimTimeline.to(icon, {y: -50, duration: 7}, off);
+        iconAnimTimeline.to(icon, {opacity: 0, duration: 1 + Math.random()*2, delay: 0.8 + Math.random()* 1.6}, off);
+    }
+
+    
+   /*  const NUM_ICONS = 5;
+    const iconPaths = ["assets/wifi.svg", "assets/thumbs.svg"]
+
+    let iconPool = [];
+const tl = gsap.timeline({repeat: -1});
+    for (let i = 0;i<NUM_ICONS; i++){
+        for (let j = 0;j<iconPaths.length;j++){
+            const icon = document.createElement("div");
+            icon.classList.add("animated-icon");
+            icon.style.backgroundImage = `url(${iconPaths[j]})`;
+            icon.style.backgroundScale = "cover";
+            icon.style.position = "absolute";
+            imageContainer.appendChild(icon);
+            iconPool.push(icon);
+            gsap.set(icon,{x: 880, y: 420});
+            horizontalSinePulse(icon, i* 0.6 + Math.random()* 2.8);
+            
+        }
+    }
+ 
+    function horizontalSinePulse(el, off){
+        const scale = 1 + Math.random() * 0.4;
+        tl.fromTo(el, {scaleX: 0}, {scaleX: scale, ease: "elastic", duration: 0.8 + Math.random()*0.2}, off);
+        tl.fromTo(el, {scaleY: 0}, {scaleY: scale, ease: "elastic", duration: 1+ Math.random()*0.3}, off);
+        tl.to(el, {x: "+=" + 10 + Math.random() * 10, ease: "sine.inOut", repeat: Math.round(1 + Math.random()*5), yoyo: true, duration: 1.4 + Math.random()*1.6}, off);
+        tl.fromTo(el, {rotation: -1}, {rotation: 1, ease: "sine.inOut"});
+        tl.to(el, {y: -50, duration: 7}, off);
+        tl.to(el, {opacity: 0, duration: 1 + Math.random()*2, delay: 0.8 + Math.random()* 1.6}, off);
+       
+    } */
+    
+  })(gsap);
